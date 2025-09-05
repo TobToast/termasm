@@ -9,6 +9,7 @@ import tobi.tools.hardware.AssemblerException.UnknownMnemonicException;
 import tobi.tools.hardware.AssemblyParser.DirectOperandContext;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.util.*;
 
@@ -158,10 +159,10 @@ public class AssemblerVisitor
         // System.out.println("Final PC: " + pc);
     }
 
-    private void loadMnemonics() throws AssemblerException {
+    private void loadMnemonics() throws AssemblerException, FileNotFoundException {
         mnemonics = new HashMap<>();
         aliases = new HashMap<>();
-        try (Scanner sc = new Scanner(getClass().getResourceAsStream("/ops.txt"))) {
+        try (Scanner sc = new Scanner(new File("/ops.txt"))) {
             sc.nextLine();
             while (sc.hasNextLine()) {
                 String opname = sc.nextLine().split("\s+")[0];
@@ -174,8 +175,8 @@ public class AssemblerVisitor
             }
         }
         try {
-            if(new File(getClass().getResource("/aliases.txt").toURI()).exists()) {
-                try (Scanner sc = new Scanner(getClass().getResourceAsStream("/aliases.txt"))) {
+            if(new File("/aliases.txt").exists()) {
+                try (Scanner sc = new Scanner(new File("/aliases.txt"))) {
                     while (sc.hasNextLine()) {
                         String line = sc.nextLine().toUpperCase().trim();
                         if(line.isBlank()) continue;
