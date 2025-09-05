@@ -35,7 +35,7 @@ public class AssemblerVisitor
     }
 
     @Override
-    public String assemble(String code) throws AssemblerException {
+    public String assemble(String code) throws AssemblerException, FileNotFoundException {
         // 1) Prepare
         statements = new ArrayList<>();
         labels.clear();
@@ -174,26 +174,22 @@ public class AssemblerVisitor
                 }
             }
         }
-        try {
-            if(new File("/aliases.txt").exists()) {
-                try (Scanner sc = new Scanner(new File("/aliases.txt"))) {
-                    while (sc.hasNextLine()) {
-                        String line = sc.nextLine().toUpperCase().trim();
-                        if(line.isBlank()) continue;
-                        String target = line.split("=")[0].trim().replaceAll("\s", " ");
-                        if(target.startsWith("\"") && target.endsWith("\"")) {
-                            target = target.substring(1,target.length()-1);
-                        }
-                        String replacement = line.split("=")[1].trim().replaceAll("\s", " ");
-                        if(replacement.startsWith("\"") && replacement.endsWith("\"")) {
-                            replacement = replacement.substring(1,replacement.length()-1);
-                        }
-                        aliases.put(target,replacement);
+        if(new File("/aliases.txt").exists()) {
+            try (Scanner sc = new Scanner(new File("/aliases.txt"))) {
+                while (sc.hasNextLine()) {
+                    String line = sc.nextLine().toUpperCase().trim();
+                    if(line.isBlank()) continue;
+                    String target = line.split("=")[0].trim().replaceAll("\s", " ");
+                    if(target.startsWith("\"") && target.endsWith("\"")) {
+                        target = target.substring(1,target.length()-1);
                     }
+                    String replacement = line.split("=")[1].trim().replaceAll("\s", " ");
+                    if(replacement.startsWith("\"") && replacement.endsWith("\"")) {
+                        replacement = replacement.substring(1,replacement.length()-1);
+                    }
+                    aliases.put(target,replacement);
                 }
             }
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
         }
     }
 
