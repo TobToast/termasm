@@ -34,15 +34,19 @@ jobs:
           mv target/termasm target/termasm-linux-x86_64
         fi
       shell: bash
+    
+    - name: Get commit count
+      id: commit_count
+      run: echo "count=$(git rev-list --count HEAD)" >> $GITHUB_OUTPUT
 
     - name: Publish to GitHub Release (virtual tag)
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: release
-        name: "termasm – latest build"
-        files: |
-          target/termasm-*
-        prerelease: false
-        overwrite: true
+          tag_name: v${{ steps.commit_count.outputs.count }}
+          name: "termasm – build #${{ steps.commit_count.outputs.count }}"
+          files: |
+            target/termasm-*
+          prerelease: false
+          overwrite: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
