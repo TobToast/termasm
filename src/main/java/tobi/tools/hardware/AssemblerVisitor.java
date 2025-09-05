@@ -74,18 +74,18 @@ public class AssemblerVisitor
 
         for (ParseTree child : prog.children) {
             if(child.getText().isBlank()) continue;
-            System.out.println("Line: '" + child.getText() + "'");
+            // System.out.println("Line: '" + child.getText() + "'");
             if (child instanceof AssemblyParser.LabeldefContext childLD) {
                 String lbl = childLD.label().getText();
                 // major label?
                 if (lbl.matches("[a-zA-Z_][A-Za-z0-9_]*")) {
                     currentMayor = lbl;
-                    System.out.println("Major label: " + lbl);
+                    // System.out.println("Major label: " + lbl);
                     labels.put(lbl, pc);
                 } else {
                     // minor, relative to currentMayor
                     String abs = lbl.startsWith(".") ? currentMayor + lbl : lbl;
-                    System.out.println("Minor Label: " + lbl + " = " + abs);
+                    // System.out.println("Minor Label: " + lbl + " = " + abs);
                     labels.put(abs, pc);
                 }
             }
@@ -95,7 +95,7 @@ public class AssemblerVisitor
 
                 // mimic your PC‐count logic: count payload words A & B
                 if(st.opa != null) {
-                    System.out.println("Operand A: " + st.opa.getText());
+                    // System.out.println("Operand A: " + st.opa.getText());
                     boolean hasOperand = false;
                     DirectOperandContext doctx = null;
                     if(st.opa.directOperand() != null) {
@@ -108,22 +108,22 @@ public class AssemblerVisitor
                     if(hasOperand && doctx.literal() != null) {
                         if(doctx.literal().constantExpression() != null) {
                             if(!(EXP_SOLVER.evaluate(doctx.literal().constantExpression().getText()).matches("(0x|0b)?0+"))) {
-                                System.out.println("\thas non-zero Payload.");
-                                System.out.println("\t\tvalue: " + EXP_SOLVER.evaluate(doctx.literal().constantExpression().getText()));
+                                // System.out.println("\thas non-zero Payload.");
+                                // System.out.println("\t\tvalue: " + EXP_SOLVER.evaluate(doctx.literal().constantExpression().getText()));
                                 if(OPT_SIMM && (Long.valueOf(EXP_SOLVER.evaluate(doctx.literal().constantExpression().getText())) >= -512 && Long.valueOf(EXP_SOLVER.evaluate(doctx.literal().constantExpression().getText())) <= 511)) {
-                                    System.out.println("\t\tfits into 10 bit signed immediate. PC unchanged.");
+                                    // System.out.println("\t\tfits into 10 bit signed immediate. PC unchanged.");
                                 } else {
-                                    System.out.println("\t\tgreater than 10 bit or opt_SImm is not activated. PC now: " + (pc+1));
+                                    // System.out.println("\t\tgreater than 10 bit or opt_SImm is not activated. PC now: " + (pc+1));
                                     pc++;
                                 }
                             }
                         } else if(doctx.literal().label() != null) {
-                                System.out.println("\thas non-zero label Payload. PC unchanged");
+                                // System.out.println("\thas non-zero label Payload. PC unchanged");
                         }
                     }
                 }
                 if(st.opb != null) {
-                    System.out.println("Operand B: " + st.opb.getText());
+                    // System.out.println("Operand B: " + st.opb.getText());
                     boolean hasOperand = false;
                     DirectOperandContext doctx = null;
                     if(st.opb.directOperand() != null) {
@@ -136,26 +136,26 @@ public class AssemblerVisitor
                     if(hasOperand && doctx.literal() != null) {
                         if(doctx.literal().constantExpression() != null) {
                             if(!(EXP_SOLVER.evaluate(doctx.literal().constantExpression().getText()).matches("(0x|0b)?0+"))) {
-                                System.out.println("\thas non-zero Payload.");
-                                    System.out.println("\t\tvalue: " + EXP_SOLVER.evaluate(doctx.literal().constantExpression().getText()));
+                                // System.out.println("\thas non-zero Payload.");
+                                    // System.out.println("\t\tvalue: " + EXP_SOLVER.evaluate(doctx.literal().constantExpression().getText()));
                                 if(OPT_SIMM && (Long.valueOf(EXP_SOLVER.evaluate(doctx.literal().constantExpression().getText())) >= -512 && Long.valueOf(EXP_SOLVER.evaluate(doctx.literal().constantExpression().getText())) <= 511)) {
-                                    System.out.println("\t\tfits into 10 bit signed immediate. PC unchanged.");
+                                    // System.out.println("\t\tfits into 10 bit signed immediate. PC unchanged.");
                                 } else {
-                                    System.out.println("\t\tgreater than 10 bit or opt_SImm is not activated. PC now: " + (pc+1));
+                                    // System.out.println("\t\tgreater than 10 bit or opt_SImm is not activated. PC now: " + (pc+1));
                                     pc++;
                                 }
                             }
                         } else if(doctx.literal().label() != null) {
-                                System.out.println("\thas non-zero label Payload. PC unchanged");
+                                // System.out.println("\thas non-zero label Payload. PC unchanged");
                         }
                     }
                 }
                 pc++;
             }
-            System.out.println("Instrution finished. PC: " + pc);
+            // System.out.println("Instrution finished. PC: " + pc);
             mayorForLine.put(stmtIdx++, currentMayor);
         }
-        System.out.println("Final PC: " + pc);
+        // System.out.println("Final PC: " + pc);
     }
 
     private void loadMnemonics() throws AssemblerException {
@@ -219,7 +219,7 @@ public class AssemblerVisitor
         String aliasKey = mnem + (ctx.opa != null ? " " : "") + (ctx.opb != null ? " " : "") + (ctx.REGISTER() != null ? " -> " : "") + (ctx.predicate != null ? " {}" : "");
         if(aliases.containsKey(aliasKey)) {
             String replacement = aliases.get(aliasKey).replace("", opa).replace("", opb).replace("",dest).replace("", pred);
-            System.out.println("Alias matches: " + aliasKey + ", Replacement: " + replacement);
+            // System.out.println("Alias matches: " + aliasKey + ", Replacement: " + replacement);
             String preArrow = replacement.split("->")[0].trim();
             mnem = preArrow.split(" ")[0];
             opa = preArrow.split(" ").length > 1 ? preArrow.split(" ")[1] : "0";
@@ -327,31 +327,31 @@ public class AssemblerVisitor
     private String resolveOperand(String op, String mayor) throws AssemblerException {
        String o = op.startsWith("#") ? op.substring(1) : op;
        
-        System.out.println("o: " + o);
+        // System.out.println("o: " + o);
 
         if(o.matches(PROG_COUNTER_ALIAS)) {
-            System.out.println("\tRecognized as PC");
+            // System.out.println("\tRecognized as PC");
             return PROG_COUNTER;
         }
 
         if(isRegister(o)) {
-            System.out.println("\tRecognized as Register");
+            // System.out.println("\tRecognized as Register");
             return o;
         }
         if (isIOOp(o)) {
-            System.out.println("\tRecognized as IO Operand");
+            // System.out.println("\tRecognized as IO Operand");
             return o;
         }
         // How to find out if it's an expression?
         if (o.matches("((0x|0b)?[0-9A-F]*[+\\-*/^()]?(0x|0b)?[0-9A-F]*)+")) {
-            System.out.println("\tRecognized as Expression: " + o + " = " + EXP_SOLVER.evaluate(o));
+            // System.out.println("\tRecognized as Expression: " + o + " = " + EXP_SOLVER.evaluate(o));
             return EXP_SOLVER.evaluate(o);
         }
         if(o.startsWith("<") && o.endsWith(">")) {
             o = o.substring(1,o.length()-1);
         }
 
-        System.out.println("\tRecognized as Label. Mayor: " + mayor);
+        // System.out.println("\tRecognized as Label. Mayor: " + mayor);
 
         // neuer Code: nur wenn das Label mit '.' beginnt, ist es relativ
         String key;
@@ -365,7 +365,7 @@ public class AssemblerVisitor
         if (addr == null) {
             throw new AssemblerException("Label \"" + o + "\" not found");
         }
-        System.out.println(key + "=" + addr);
+        // System.out.println(key + "=" + addr);
         return addr.toString();
     }
 
