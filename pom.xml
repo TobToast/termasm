@@ -61,6 +61,7 @@
                 <buildArgs>
                     <buildArg>-O3</buildArg>
                     <!--buildArg>-^-gc=G1</buildArg-->
+                    <buildArg>-H:ResourceConfigurationFiles=graal_resource_config.json</buildArg>
                     <buildArg>-march=compatibility</buildArg>
                 </buildArgs>
             </configuration>
