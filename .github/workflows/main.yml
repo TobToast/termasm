@@ -1,0 +1,49 @@
+name: termasm Auto-Release on Every Commit
+
+on:
+  push:
+    branches:
+      - '**'
+
+permissions:
+  contents: write
+
+jobs:
+  autobuild:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: graalvm/setup-graalvm@v1
+      with:
+        java-version: '24'
+        distribution: 'graalvm'
+        components: 'native-image'
+
+    - name: Build
+      run: mvn -B clean package
+
+    - name: Rename Binary
+      run: |
+        if [[ "${{ runner.os }}" == "Windows" ]]; then
+          mv target/termasm.exe target/termasm-windows-x86_64.exe
+        else
+          mv target/termasm target/termasm-linux-x86_64
+        fi
+      shell: bash
+
+    - name: Publish to GitHub Release (virtual tag)
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: release
+        name: "termasm – latest build"
+        files: |
+          target/termasm-*
+        prerelease: false
+        overwrite: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
