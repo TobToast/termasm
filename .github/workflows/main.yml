@@ -22,7 +22,6 @@ jobs:
       with:
         java-version: '24'
         distribution: 'graalvm'
-        components: 'native-image'
 
     - name: Build
       run: mvn -B clean package
