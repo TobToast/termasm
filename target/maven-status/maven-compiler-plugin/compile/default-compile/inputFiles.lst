@@ -1,0 +1,15 @@
+/media/tobias/Daten/VS-Code_Workspace/termasm/src/main/java/tobi/tools/hardware/AssemblyParser.java
+/media/tobias/Daten/VS-Code_Workspace/termasm/src/main/java/tobi/tools/hardware/AssemblerVisitor.java
+/media/tobias/Daten/VS-Code_Workspace/termasm/src/main/java/tobi/tools/hardware/Assembler.java
+/media/tobias/Daten/VS-Code_Workspace/termasm/src/main/java/tobi/tools/hardware/AbstractAssembler.java
+/media/tobias/Daten/VS-Code_Workspace/termasm/src/main/java/tobi/tools/hardware/Operation.java
+/media/tobias/Daten/VS-Code_Workspace/termasm/src/main/java/tobi/tools/hardware/AssemblyLexer.java
+/media/tobias/Daten/VS-Code_Workspace/termasm/src/main/java/module-info.java
+/media/tobias/Daten/VS-Code_Workspace/termasm/src/main/java/tobi/tools/hardware/AssemblyParserBaseVisitor.java
+/media/tobias/Daten/VS-Code_Workspace/termasm/src/main/java/tobi/tools/hardware/AssemblerException.java
+/media/tobias/Daten/VS-Code_Workspace/termasm/src/main/java/tobi/tools/hardware/RemoteException.java
+/media/tobias/Daten/VS-Code_Workspace/termasm/src/main/java/tobi/tools/hardware/RemoteInterface.java
+/media/tobias/Daten/VS-Code_Workspace/termasm/src/main/java/tobi/tools/hardware/ALUMode.java
+/media/tobias/Daten/VS-Code_Workspace/termasm/src/main/java/tobi/tools/hardware/InstructionGenerator.java
+/media/tobias/Daten/VS-Code_Workspace/termasm/src/main/java/tobi/tools/hardware/App.java
+/media/tobias/Daten/VS-Code_Workspace/termasm/src/main/java/tobi/tools/hardware/AssemblyParserVisitor.java

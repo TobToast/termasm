@@ -1,0 +1,1091 @@
+// Generated from /media/tobias/Daten/VS-Code_Workspace/termasm/src/main/antlr/Assembly.g4 by ANTLR 4.13.1
+
+package tobi.tools.hardware;
+
+
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+
+import org.antlr.v4.runtime.atn.*;
+import org.antlr.v4.runtime.dfa.DFA;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.*;
+import org.antlr.v4.runtime.tree.*;
+import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
+
+@SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue"})
+public class AssemblyParser extends Parser {
+	static { RuntimeMetaData.checkVersion("4.13.1", RuntimeMetaData.VERSION); }
+
+	protected static final DFA[] _decisionToDFA;
+	protected static final PredictionContextCache _sharedContextCache =
+		new PredictionContextCache();
+	public static final int
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
+		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
+		HEX_NUMBER=18, BIN_NUMBER=19, DEC_NUMBER=20, ARROW=21, REGISTER=22, MNEMONIC=23, 
+		ID=24, WS=25, COMMENT=26, MULTI_COMMENT=27;
+	public static final int
+		RULE_assemblyprog = 0, RULE_statement = 1, RULE_labeldef = 2, RULE_label = 3, 
+		RULE_operand = 4, RULE_indirectOperand = 5, RULE_directOperand = 6, RULE_ioOperand = 7, 
+		RULE_literal = 8, RULE_constantExpression = 9, RULE_number = 10;
+	private static String[] makeRuleNames() {
+		return new String[] {
+			"assemblyprog", "statement", "labeldef", "label", "operand", "indirectOperand", 
+			"directOperand", "ioOperand", "literal", "constantExpression", "number"
+		};
+	}
+	public static final String[] ruleNames = makeRuleNames();
+
+	private static String[] makeLiteralNames() {
+		return new String[] {
+			null, "'{'", "'}'", "':'", "'.'", "'#'", "'\\u00A7'", "'<'", "'>'", "'\"'", 
+			"'''", "'('", "')'", "'*'", "'/'", "'+'", "'-'", "'^'", null, null, null, 
+			"'->'"
+		};
+	}
+	private static final String[] _LITERAL_NAMES = makeLiteralNames();
+	private static String[] makeSymbolicNames() {
+		return new String[] {
+			null, null, null, null, null, null, null, null, null, null, null, null, 
+			null, null, null, null, null, null, "HEX_NUMBER", "BIN_NUMBER", "DEC_NUMBER", 
+			"ARROW", "REGISTER", "MNEMONIC", "ID", "WS", "COMMENT", "MULTI_COMMENT"
+		};
+	}
+	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
+	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
+
+	/**
+	 * @deprecated Use {@link #VOCABULARY} instead.
+	 */
+	@Deprecated
+	public static final String[] tokenNames;
+	static {
+		tokenNames = new String[_SYMBOLIC_NAMES.length];
+		for (int i = 0; i < tokenNames.length; i++) {
+			tokenNames[i] = VOCABULARY.getLiteralName(i);
+			if (tokenNames[i] == null) {
+				tokenNames[i] = VOCABULARY.getSymbolicName(i);
+			}
+
+			if (tokenNames[i] == null) {
+				tokenNames[i] = "<INVALID>";
+			}
+		}
+	}
+
+	@Override
+	@Deprecated
+	public String[] getTokenNames() {
+		return tokenNames;
+	}
+
+	@Override
+
+	public Vocabulary getVocabulary() {
+		return VOCABULARY;
+	}
+
+	@Override
+	public String getGrammarFileName() { return "Assembly.g4"; }
+
+	@Override
+	public String[] getRuleNames() { return ruleNames; }
+
+	@Override
+	public String getSerializedATN() { return _serializedATN; }
+
+	@Override
+	public ATN getATN() { return _ATN; }
+
+
+	  private static final java.util.Set<String> MNEMONICS = loadMnemonics();
+	  private static java.util.Set<String> loadMnemonics() {
+	    java.util.Set<String> set = new java.util.HashSet<>();
+	    try (java.io.InputStream is = AssemblyLexer.class.getResourceAsStream("/ops.txt");
+	         java.util.Scanner sc = new java.util.Scanner(is, java.nio.charset.StandardCharsets.UTF_8)) {
+	      sc.nextLine(); // Header skip
+	      while (sc.hasNextLine()) {
+	        String token = sc.nextLine().split("\\s+")[0];
+	        int l = token.indexOf('('), r = token.indexOf(')');
+	        if (l>=0 && r>l) {
+	          for (String m : token.substring(l+1,r).split("/")) {
+	            set.add(m.toLowerCase());
+	          }
+	        }
+	      }
+	    } catch (Exception e) {
+	      throw new RuntimeException(e);
+	    }
+	    return set;
+	  }
+
+	public AssemblyParser(TokenStream input) {
+		super(input);
+		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class AssemblyprogContext extends ParserRuleContext {
+		public TerminalNode EOF() { return getToken(AssemblyParser.EOF, 0); }
+		public List<StatementContext> statement() {
+			return getRuleContexts(StatementContext.class);
+		}
+		public StatementContext statement(int i) {
+			return getRuleContext(StatementContext.class,i);
+		}
+		public List<LabeldefContext> labeldef() {
+			return getRuleContexts(LabeldefContext.class);
+		}
+		public LabeldefContext labeldef(int i) {
+			return getRuleContext(LabeldefContext.class,i);
+		}
+		public AssemblyprogContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_assemblyprog; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).enterAssemblyprog(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).exitAssemblyprog(this);
+		}
+	}
+
+	public final AssemblyprogContext assemblyprog() throws RecognitionException {
+		AssemblyprogContext _localctx = new AssemblyprogContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_assemblyprog);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(26);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 25165840L) != 0)) {
+				{
+				setState(24);
+				_errHandler.sync(this);
+				switch (_input.LA(1)) {
+				case MNEMONIC:
+					{
+					setState(22);
+					statement();
+					}
+					break;
+				case T__3:
+				case ID:
+					{
+					setState(23);
+					labeldef();
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
+				}
+				}
+				setState(28);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			setState(29);
+			match(EOF);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class StatementContext extends ParserRuleContext {
+		public OperandContext opa;
+		public OperandContext opb;
+		public NumberContext predicate;
+		public TerminalNode MNEMONIC() { return getToken(AssemblyParser.MNEMONIC, 0); }
+		public TerminalNode ARROW() { return getToken(AssemblyParser.ARROW, 0); }
+		public TerminalNode REGISTER() { return getToken(AssemblyParser.REGISTER, 0); }
+		public List<OperandContext> operand() {
+			return getRuleContexts(OperandContext.class);
+		}
+		public OperandContext operand(int i) {
+			return getRuleContext(OperandContext.class,i);
+		}
+		public NumberContext number() {
+			return getRuleContext(NumberContext.class,0);
+		}
+		public StatementContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_statement; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).enterStatement(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).exitStatement(this);
+		}
+	}
+
+	public final StatementContext statement() throws RecognitionException {
+		StatementContext _localctx = new StatementContext(_ctx, getState());
+		enterRule(_localctx, 2, RULE_statement);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(31);
+			match(MNEMONIC);
+			setState(33);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
+			case 1:
+				{
+				setState(32);
+				((StatementContext)_localctx).opa = operand();
+				}
+				break;
+			}
+			setState(36);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
+			case 1:
+				{
+				setState(35);
+				((StatementContext)_localctx).opb = operand();
+				}
+				break;
+			}
+			setState(40);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==ARROW) {
+				{
+				setState(38);
+				match(ARROW);
+				setState(39);
+				match(REGISTER);
+				}
+			}
+
+			setState(46);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==T__0) {
+				{
+				setState(42);
+				match(T__0);
+				setState(43);
+				((StatementContext)_localctx).predicate = number();
+				setState(44);
+				match(T__1);
+				}
+			}
+
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class LabeldefContext extends ParserRuleContext {
+		public LabelContext label() {
+			return getRuleContext(LabelContext.class,0);
+		}
+		public LabeldefContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_labeldef; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).enterLabeldef(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).exitLabeldef(this);
+		}
+	}
+
+	public final LabeldefContext labeldef() throws RecognitionException {
+		LabeldefContext _localctx = new LabeldefContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_labeldef);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(48);
+			label();
+			setState(49);
+			match(T__2);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class LabelContext extends ParserRuleContext {
+		public List<TerminalNode> ID() { return getTokens(AssemblyParser.ID); }
+		public TerminalNode ID(int i) {
+			return getToken(AssemblyParser.ID, i);
+		}
+		public LabelContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_label; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).enterLabel(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).exitLabel(this);
+		}
+	}
+
+	public final LabelContext label() throws RecognitionException {
+		LabelContext _localctx = new LabelContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_label);
+		int _la;
+		try {
+			int _alt;
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(52);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==T__3) {
+				{
+				setState(51);
+				match(T__3);
+				}
+			}
+
+			setState(54);
+			match(ID);
+			setState(59);
+			_errHandler.sync(this);
+			_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					{
+					{
+					setState(55);
+					match(T__3);
+					setState(56);
+					match(ID);
+					}
+					} 
+				}
+				setState(61);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class OperandContext extends ParserRuleContext {
+		public DirectOperandContext directOperand() {
+			return getRuleContext(DirectOperandContext.class,0);
+		}
+		public IndirectOperandContext indirectOperand() {
+			return getRuleContext(IndirectOperandContext.class,0);
+		}
+		public OperandContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_operand; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).enterOperand(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).exitOperand(this);
+		}
+	}
+
+	public final OperandContext operand() throws RecognitionException {
+		OperandContext _localctx = new OperandContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_operand);
+		try {
+			setState(64);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case T__3:
+			case T__5:
+			case T__6:
+			case T__8:
+			case T__9:
+			case T__10:
+			case T__15:
+			case HEX_NUMBER:
+			case BIN_NUMBER:
+			case DEC_NUMBER:
+			case REGISTER:
+			case ID:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(62);
+				directOperand();
+				}
+				break;
+			case T__4:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(63);
+				indirectOperand();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class IndirectOperandContext extends ParserRuleContext {
+		public DirectOperandContext directOperand() {
+			return getRuleContext(DirectOperandContext.class,0);
+		}
+		public IndirectOperandContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_indirectOperand; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).enterIndirectOperand(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).exitIndirectOperand(this);
+		}
+	}
+
+	public final IndirectOperandContext indirectOperand() throws RecognitionException {
+		IndirectOperandContext _localctx = new IndirectOperandContext(_ctx, getState());
+		enterRule(_localctx, 10, RULE_indirectOperand);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(66);
+			match(T__4);
+			setState(67);
+			directOperand();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class DirectOperandContext extends ParserRuleContext {
+		public LiteralContext val;
+		public Token reg;
+		public IoOperandContext io;
+		public LiteralContext literal() {
+			return getRuleContext(LiteralContext.class,0);
+		}
+		public TerminalNode REGISTER() { return getToken(AssemblyParser.REGISTER, 0); }
+		public IoOperandContext ioOperand() {
+			return getRuleContext(IoOperandContext.class,0);
+		}
+		public DirectOperandContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_directOperand; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).enterDirectOperand(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).exitDirectOperand(this);
+		}
+	}
+
+	public final DirectOperandContext directOperand() throws RecognitionException {
+		DirectOperandContext _localctx = new DirectOperandContext(_ctx, getState());
+		enterRule(_localctx, 12, RULE_directOperand);
+		try {
+			setState(72);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case T__3:
+			case T__6:
+			case T__8:
+			case T__9:
+			case T__10:
+			case T__15:
+			case HEX_NUMBER:
+			case BIN_NUMBER:
+			case DEC_NUMBER:
+			case ID:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(69);
+				((DirectOperandContext)_localctx).val = literal();
+				}
+				break;
+			case REGISTER:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(70);
+				((DirectOperandContext)_localctx).reg = match(REGISTER);
+				}
+				break;
+			case T__5:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(71);
+				((DirectOperandContext)_localctx).io = ioOperand();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class IoOperandContext extends ParserRuleContext {
+		public LiteralContext literal() {
+			return getRuleContext(LiteralContext.class,0);
+		}
+		public IoOperandContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_ioOperand; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).enterIoOperand(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).exitIoOperand(this);
+		}
+	}
+
+	public final IoOperandContext ioOperand() throws RecognitionException {
+		IoOperandContext _localctx = new IoOperandContext(_ctx, getState());
+		enterRule(_localctx, 14, RULE_ioOperand);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(74);
+			match(T__5);
+			setState(75);
+			literal();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class LiteralContext extends ParserRuleContext {
+		public ConstantExpressionContext constantExpression() {
+			return getRuleContext(ConstantExpressionContext.class,0);
+		}
+		public LabelContext label() {
+			return getRuleContext(LabelContext.class,0);
+		}
+		public LiteralContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_literal; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).enterLiteral(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).exitLiteral(this);
+		}
+	}
+
+	public final LiteralContext literal() throws RecognitionException {
+		LiteralContext _localctx = new LiteralContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_literal);
+		try {
+			int _alt;
+			setState(99);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case T__10:
+			case T__15:
+			case HEX_NUMBER:
+			case BIN_NUMBER:
+			case DEC_NUMBER:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(77);
+				constantExpression(0);
+				}
+				break;
+			case T__3:
+			case ID:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(78);
+				label();
+				}
+				break;
+			case T__6:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(79);
+				match(T__6);
+				setState(80);
+				label();
+				setState(81);
+				match(T__7);
+				}
+				break;
+			case T__8:
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(83);
+				match(T__8);
+				setState(87);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
+				while ( _alt!=1 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+					if ( _alt==1+1 ) {
+						{
+						{
+						setState(84);
+						matchWildcard();
+						}
+						} 
+					}
+					setState(89);
+					_errHandler.sync(this);
+					_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
+				}
+				setState(90);
+				match(T__8);
+				}
+				break;
+			case T__9:
+				enterOuterAlt(_localctx, 5);
+				{
+				setState(91);
+				match(T__9);
+				setState(95);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,11,_ctx);
+				while ( _alt!=1 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+					if ( _alt==1+1 ) {
+						{
+						{
+						setState(92);
+						matchWildcard();
+						}
+						} 
+					}
+					setState(97);
+					_errHandler.sync(this);
+					_alt = getInterpreter().adaptivePredict(_input,11,_ctx);
+				}
+				setState(98);
+				match(T__9);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ConstantExpressionContext extends ParserRuleContext {
+		public Token op;
+		public List<ConstantExpressionContext> constantExpression() {
+			return getRuleContexts(ConstantExpressionContext.class);
+		}
+		public ConstantExpressionContext constantExpression(int i) {
+			return getRuleContext(ConstantExpressionContext.class,i);
+		}
+		public NumberContext number() {
+			return getRuleContext(NumberContext.class,0);
+		}
+		public ConstantExpressionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_constantExpression; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).enterConstantExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).exitConstantExpression(this);
+		}
+	}
+
+	public final ConstantExpressionContext constantExpression() throws RecognitionException {
+		return constantExpression(0);
+	}
+
+	private ConstantExpressionContext constantExpression(int _p) throws RecognitionException {
+		ParserRuleContext _parentctx = _ctx;
+		int _parentState = getState();
+		ConstantExpressionContext _localctx = new ConstantExpressionContext(_ctx, _parentState);
+		ConstantExpressionContext _prevctx = _localctx;
+		int _startState = 18;
+		enterRecursionRule(_localctx, 18, RULE_constantExpression, _p);
+		int _la;
+		try {
+			int _alt;
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(107);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case T__10:
+				{
+				setState(102);
+				match(T__10);
+				setState(103);
+				constantExpression(0);
+				setState(104);
+				match(T__11);
+				}
+				break;
+			case T__15:
+			case HEX_NUMBER:
+			case BIN_NUMBER:
+			case DEC_NUMBER:
+				{
+				setState(106);
+				number();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+			_ctx.stop = _input.LT(-1);
+			setState(120);
+			_errHandler.sync(this);
+			_alt = getInterpreter().adaptivePredict(_input,15,_ctx);
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					if ( _parseListeners!=null ) triggerExitRuleEvent();
+					_prevctx = _localctx;
+					{
+					setState(118);
+					_errHandler.sync(this);
+					switch ( getInterpreter().adaptivePredict(_input,14,_ctx) ) {
+					case 1:
+						{
+						_localctx = new ConstantExpressionContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_constantExpression);
+						setState(109);
+						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
+						setState(110);
+						((ConstantExpressionContext)_localctx).op = _input.LT(1);
+						_la = _input.LA(1);
+						if ( !(_la==T__12 || _la==T__13) ) {
+							((ConstantExpressionContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+						}
+						else {
+							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+							_errHandler.reportMatch(this);
+							consume();
+						}
+						setState(111);
+						constantExpression(5);
+						}
+						break;
+					case 2:
+						{
+						_localctx = new ConstantExpressionContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_constantExpression);
+						setState(112);
+						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
+						setState(113);
+						((ConstantExpressionContext)_localctx).op = _input.LT(1);
+						_la = _input.LA(1);
+						if ( !(_la==T__14 || _la==T__15) ) {
+							((ConstantExpressionContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+						}
+						else {
+							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+							_errHandler.reportMatch(this);
+							consume();
+						}
+						setState(114);
+						constantExpression(4);
+						}
+						break;
+					case 3:
+						{
+						_localctx = new ConstantExpressionContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_constantExpression);
+						setState(115);
+						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
+						setState(116);
+						((ConstantExpressionContext)_localctx).op = match(T__16);
+						setState(117);
+						constantExpression(3);
+						}
+						break;
+					}
+					} 
+				}
+				setState(122);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,15,_ctx);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			unrollRecursionContexts(_parentctx);
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class NumberContext extends ParserRuleContext {
+		public TerminalNode HEX_NUMBER() { return getToken(AssemblyParser.HEX_NUMBER, 0); }
+		public TerminalNode BIN_NUMBER() { return getToken(AssemblyParser.BIN_NUMBER, 0); }
+		public TerminalNode DEC_NUMBER() { return getToken(AssemblyParser.DEC_NUMBER, 0); }
+		public NumberContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_number; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).enterNumber(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblyListener ) ((AssemblyListener)listener).exitNumber(this);
+		}
+	}
+
+	public final NumberContext number() throws RecognitionException {
+		NumberContext _localctx = new NumberContext(_ctx, getState());
+		enterRule(_localctx, 20, RULE_number);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(124);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==T__15) {
+				{
+				setState(123);
+				match(T__15);
+				}
+			}
+
+			setState(126);
+			_la = _input.LA(1);
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 1835008L) != 0)) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
+		switch (ruleIndex) {
+		case 9:
+			return constantExpression_sempred((ConstantExpressionContext)_localctx, predIndex);
+		}
+		return true;
+	}
+	private boolean constantExpression_sempred(ConstantExpressionContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 0:
+			return precpred(_ctx, 4);
+		case 1:
+			return precpred(_ctx, 3);
+		case 2:
+			return precpred(_ctx, 2);
+		}
+		return true;
+	}
+
+	public static final String _serializedATN =
+		"\u0004\u0001\u001b\u0081\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
+		"\u0002\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004"+
+		"\u0002\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007"+
+		"\u0002\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0001\u0000\u0001\u0000"+
+		"\u0005\u0000\u0019\b\u0000\n\u0000\f\u0000\u001c\t\u0000\u0001\u0000\u0001"+
+		"\u0000\u0001\u0001\u0001\u0001\u0003\u0001\"\b\u0001\u0001\u0001\u0003"+
+		"\u0001%\b\u0001\u0001\u0001\u0001\u0001\u0003\u0001)\b\u0001\u0001\u0001"+
+		"\u0001\u0001\u0001\u0001\u0001\u0001\u0003\u0001/\b\u0001\u0001\u0002"+
+		"\u0001\u0002\u0001\u0002\u0001\u0003\u0003\u00035\b\u0003\u0001\u0003"+
+		"\u0001\u0003\u0001\u0003\u0005\u0003:\b\u0003\n\u0003\f\u0003=\t\u0003"+
+		"\u0001\u0004\u0001\u0004\u0003\u0004A\b\u0004\u0001\u0005\u0001\u0005"+
+		"\u0001\u0005\u0001\u0006\u0001\u0006\u0001\u0006\u0003\u0006I\b\u0006"+
+		"\u0001\u0007\u0001\u0007\u0001\u0007\u0001\b\u0001\b\u0001\b\u0001\b\u0001"+
+		"\b\u0001\b\u0001\b\u0001\b\u0005\bV\b\b\n\b\f\bY\t\b\u0001\b\u0001\b\u0001"+
+		"\b\u0005\b^\b\b\n\b\f\ba\t\b\u0001\b\u0003\bd\b\b\u0001\t\u0001\t\u0001"+
+		"\t\u0001\t\u0001\t\u0001\t\u0003\tl\b\t\u0001\t\u0001\t\u0001\t\u0001"+
+		"\t\u0001\t\u0001\t\u0001\t\u0001\t\u0001\t\u0005\tw\b\t\n\t\f\tz\t\t\u0001"+
+		"\n\u0003\n}\b\n\u0001\n\u0001\n\u0001\n\u0002W_\u0001\u0012\u000b\u0000"+
+		"\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0000\u0003\u0001\u0000"+
+		"\r\u000e\u0001\u0000\u000f\u0010\u0001\u0000\u0012\u0014\u008b\u0000\u001a"+
+		"\u0001\u0000\u0000\u0000\u0002\u001f\u0001\u0000\u0000\u0000\u00040\u0001"+
+		"\u0000\u0000\u0000\u00064\u0001\u0000\u0000\u0000\b@\u0001\u0000\u0000"+
+		"\u0000\nB\u0001\u0000\u0000\u0000\fH\u0001\u0000\u0000\u0000\u000eJ\u0001"+
+		"\u0000\u0000\u0000\u0010c\u0001\u0000\u0000\u0000\u0012k\u0001\u0000\u0000"+
+		"\u0000\u0014|\u0001\u0000\u0000\u0000\u0016\u0019\u0003\u0002\u0001\u0000"+
+		"\u0017\u0019\u0003\u0004\u0002\u0000\u0018\u0016\u0001\u0000\u0000\u0000"+
+		"\u0018\u0017\u0001\u0000\u0000\u0000\u0019\u001c\u0001\u0000\u0000\u0000"+
+		"\u001a\u0018\u0001\u0000\u0000\u0000\u001a\u001b\u0001\u0000\u0000\u0000"+
+		"\u001b\u001d\u0001\u0000\u0000\u0000\u001c\u001a\u0001\u0000\u0000\u0000"+
+		"\u001d\u001e\u0005\u0000\u0000\u0001\u001e\u0001\u0001\u0000\u0000\u0000"+
+		"\u001f!\u0005\u0017\u0000\u0000 \"\u0003\b\u0004\u0000! \u0001\u0000\u0000"+
+		"\u0000!\"\u0001\u0000\u0000\u0000\"$\u0001\u0000\u0000\u0000#%\u0003\b"+
+		"\u0004\u0000$#\u0001\u0000\u0000\u0000$%\u0001\u0000\u0000\u0000%(\u0001"+
+		"\u0000\u0000\u0000&\'\u0005\u0015\u0000\u0000\')\u0005\u0016\u0000\u0000"+
+		"(&\u0001\u0000\u0000\u0000()\u0001\u0000\u0000\u0000).\u0001\u0000\u0000"+
+		"\u0000*+\u0005\u0001\u0000\u0000+,\u0003\u0014\n\u0000,-\u0005\u0002\u0000"+
+		"\u0000-/\u0001\u0000\u0000\u0000.*\u0001\u0000\u0000\u0000./\u0001\u0000"+
+		"\u0000\u0000/\u0003\u0001\u0000\u0000\u000001\u0003\u0006\u0003\u0000"+
+		"12\u0005\u0003\u0000\u00002\u0005\u0001\u0000\u0000\u000035\u0005\u0004"+
+		"\u0000\u000043\u0001\u0000\u0000\u000045\u0001\u0000\u0000\u000056\u0001"+
+		"\u0000\u0000\u00006;\u0005\u0018\u0000\u000078\u0005\u0004\u0000\u0000"+
+		"8:\u0005\u0018\u0000\u000097\u0001\u0000\u0000\u0000:=\u0001\u0000\u0000"+
+		"\u0000;9\u0001\u0000\u0000\u0000;<\u0001\u0000\u0000\u0000<\u0007\u0001"+
+		"\u0000\u0000\u0000=;\u0001\u0000\u0000\u0000>A\u0003\f\u0006\u0000?A\u0003"+
+		"\n\u0005\u0000@>\u0001\u0000\u0000\u0000@?\u0001\u0000\u0000\u0000A\t"+
+		"\u0001\u0000\u0000\u0000BC\u0005\u0005\u0000\u0000CD\u0003\f\u0006\u0000"+
+		"D\u000b\u0001\u0000\u0000\u0000EI\u0003\u0010\b\u0000FI\u0005\u0016\u0000"+
+		"\u0000GI\u0003\u000e\u0007\u0000HE\u0001\u0000\u0000\u0000HF\u0001\u0000"+
+		"\u0000\u0000HG\u0001\u0000\u0000\u0000I\r\u0001\u0000\u0000\u0000JK\u0005"+
+		"\u0006\u0000\u0000KL\u0003\u0010\b\u0000L\u000f\u0001\u0000\u0000\u0000"+
+		"Md\u0003\u0012\t\u0000Nd\u0003\u0006\u0003\u0000OP\u0005\u0007\u0000\u0000"+
+		"PQ\u0003\u0006\u0003\u0000QR\u0005\b\u0000\u0000Rd\u0001\u0000\u0000\u0000"+
+		"SW\u0005\t\u0000\u0000TV\t\u0000\u0000\u0000UT\u0001\u0000\u0000\u0000"+
+		"VY\u0001\u0000\u0000\u0000WX\u0001\u0000\u0000\u0000WU\u0001\u0000\u0000"+
+		"\u0000XZ\u0001\u0000\u0000\u0000YW\u0001\u0000\u0000\u0000Zd\u0005\t\u0000"+
+		"\u0000[_\u0005\n\u0000\u0000\\^\t\u0000\u0000\u0000]\\\u0001\u0000\u0000"+
+		"\u0000^a\u0001\u0000\u0000\u0000_`\u0001\u0000\u0000\u0000_]\u0001\u0000"+
+		"\u0000\u0000`b\u0001\u0000\u0000\u0000a_\u0001\u0000\u0000\u0000bd\u0005"+
+		"\n\u0000\u0000cM\u0001\u0000\u0000\u0000cN\u0001\u0000\u0000\u0000cO\u0001"+
+		"\u0000\u0000\u0000cS\u0001\u0000\u0000\u0000c[\u0001\u0000\u0000\u0000"+
+		"d\u0011\u0001\u0000\u0000\u0000ef\u0006\t\uffff\uffff\u0000fg\u0005\u000b"+
+		"\u0000\u0000gh\u0003\u0012\t\u0000hi\u0005\f\u0000\u0000il\u0001\u0000"+
+		"\u0000\u0000jl\u0003\u0014\n\u0000ke\u0001\u0000\u0000\u0000kj\u0001\u0000"+
+		"\u0000\u0000lx\u0001\u0000\u0000\u0000mn\n\u0004\u0000\u0000no\u0007\u0000"+
+		"\u0000\u0000ow\u0003\u0012\t\u0005pq\n\u0003\u0000\u0000qr\u0007\u0001"+
+		"\u0000\u0000rw\u0003\u0012\t\u0004st\n\u0002\u0000\u0000tu\u0005\u0011"+
+		"\u0000\u0000uw\u0003\u0012\t\u0003vm\u0001\u0000\u0000\u0000vp\u0001\u0000"+
+		"\u0000\u0000vs\u0001\u0000\u0000\u0000wz\u0001\u0000\u0000\u0000xv\u0001"+
+		"\u0000\u0000\u0000xy\u0001\u0000\u0000\u0000y\u0013\u0001\u0000\u0000"+
+		"\u0000zx\u0001\u0000\u0000\u0000{}\u0005\u0010\u0000\u0000|{\u0001\u0000"+
+		"\u0000\u0000|}\u0001\u0000\u0000\u0000}~\u0001\u0000\u0000\u0000~\u007f"+
+		"\u0007\u0002\u0000\u0000\u007f\u0015\u0001\u0000\u0000\u0000\u0011\u0018"+
+		"\u001a!$(.4;@HW_ckvx|";
+	public static final ATN _ATN =
+		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
+	static {
+		_decisionToDFA = new DFA[_ATN.getNumberOfDecisions()];
+		for (int i = 0; i < _ATN.getNumberOfDecisions(); i++) {
+			_decisionToDFA[i] = new DFA(_ATN.getDecisionState(i), i);
+		}
+	}
+}

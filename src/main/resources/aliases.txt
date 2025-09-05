@@ -1,0 +1,1 @@
+"jmp $A {$PRED}" = "mov $A -> pc {$PRED}"
