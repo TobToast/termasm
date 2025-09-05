@@ -1,2 +1,7 @@
 /.vscode
 /bin
+/build.sh
+/build.cmd
+/input.txt
+/ops.hex
+/boot.hex
