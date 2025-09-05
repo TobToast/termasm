@@ -162,7 +162,7 @@ public class AssemblerVisitor
     private void loadMnemonics() throws AssemblerException, FileNotFoundException, URISyntaxException {
         mnemonics = new HashMap<>();
         aliases = new HashMap<>();
-        try (Scanner sc = new Scanner(new File(ClassLoader.getSystemResource("/ops.txt").toURI()))) {
+        try (Scanner sc = new Scanner(new File(getClass().getResource("/ops.txt").toURI()))) {
             sc.nextLine();
             while (sc.hasNextLine()) {
                 String opname = sc.nextLine().split("\s+")[0];
@@ -175,7 +175,7 @@ public class AssemblerVisitor
             }
         }
         if(new File("/aliases.txt").exists()) {
-            try (Scanner sc = new Scanner(new File(ClassLoader.getSystemResource("/aliases.txt").toURI()))) {
+            try (Scanner sc = new Scanner(new File(getClass().getResource("/aliases.txt").toURI()))) {
                 while (sc.hasNextLine()) {
                     String line = sc.nextLine().toUpperCase().trim();
                     if(line.isBlank()) continue;
