@@ -26,7 +26,7 @@ public class App {
             options.addOption("of", "output-file", true, "File to put the Machine Code (or OPs) in.");
             options.addOption("f", "format", true, "Set the output format (valid: \"hex\", \"bin\", \"oct\", \"ihex\")");
             options.addOption("op", "operations", false, "Generate Operations instead of machine code.");
-            options.addOption("optSImm", null, false, "Optimize for signed inline immediates (10 bit, -512 to 511). Makes assembling less predictable but decreases code size. Default: true");
+            options.addOption("noSImm", null, false, "Don't optimize for signed inline immediates (10 bit, -512 to 511). Makes assembling more predictable but increases code size drastically.");
             
             try {
                 CommandLine cli = parser.parse(options, args);
@@ -81,7 +81,7 @@ public class App {
                     }
                     Files.writeString(Path.of(cli.getOptionValue("of")), (format.equals("ihex") ? "v2.0 raw\n" : "") + result);
                 } else {
-                    AbstractAssembler assembler = new AssemblerVisitor(cli.hasOption("optSImm"));
+                    AbstractAssembler assembler = new AssemblerVisitor(!cli.hasOption("noSImm"));
                     System.out.println("Format: '" + format + "'");
                     String mc = switch(format) {
                         case "hex" -> convert(assembler.assemble(content), 2, 16);
