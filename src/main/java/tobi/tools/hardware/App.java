@@ -36,7 +36,6 @@ public class App {
 
                 boolean noSImm = cli.hasOption("noSImm") ? true : false;
                 
-                String content = Files.readString(Path.of(inputFile));
                 String result = "";
                 
                 if(cli.hasOption("h")) {
@@ -48,6 +47,7 @@ public class App {
                     System.out.println("No input file specified. Use -if to specify an input file.");
                     return;
                 }
+                String content = Files.readString(Path.of(inputFile));
                 if(cli.hasOption("op")) {
                     String[] lines = content.split("\n");
                     lines[0] = "";
