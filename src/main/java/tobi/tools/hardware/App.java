@@ -20,7 +20,7 @@ public class App {
 
             Options options = new Options();
             options.addOption("h", "help", false, "Show help");
-            options.addRequiredOption("if", "input-file", true, "File to process");
+            options.addOption("if", "input-file", true, "File to process");
             options.addOption("of", "output-file", true, "File to put the Machine Code (or OPs) in.");
             options.addOption("f", "format", true, "Set the output format (valid: \"hex\", \"bin\", \"oct\", \"ihex\", \"symbin\"). Default: bin");
             options.addOption("op", "operations", false, "Generate Operations instead of machine code.");
@@ -28,6 +28,12 @@ public class App {
             
             try {
                 CommandLine cli = parser.parse(options, args);
+                
+                if(!cli.hasOption("if")) {
+                    System.out.println("No input file specified. Use -if to specify an input file.");
+                    return;
+                }
+
                 String inputFile = cli.getOptionValue("if");
                 String outputFile = cli.hasOption("of") ? cli.getOptionValue("of") : "a.out";
                 String format = cli.hasOption("f") ? cli.getOptionValue("f") : "bin";
