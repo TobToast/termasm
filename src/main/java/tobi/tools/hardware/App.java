@@ -29,10 +29,6 @@ public class App {
             try {
                 CommandLine cli = parser.parse(options, args);
                 
-                if(!cli.hasOption("if")) {
-                    System.out.println("No input file specified. Use -if to specify an input file.");
-                    return;
-                }
 
                 String inputFile = cli.getOptionValue("if");
                 String outputFile = cli.hasOption("of") ? cli.getOptionValue("of") : "a.out";
@@ -46,6 +42,10 @@ public class App {
                 if(cli.hasOption("h")) {
                     HelpFormatter hf = new HelpFormatter();
                     hf.printHelp("termasm if=INPUT_FILE -of OUTPUT_FILE (OPTIONS...)", options);
+                    return;
+                }
+                if(!cli.hasOption("if")) {
+                    System.out.println("No input file specified. Use -if to specify an input file.");
                     return;
                 }
                 if(cli.hasOption("op")) {
