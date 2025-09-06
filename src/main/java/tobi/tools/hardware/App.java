@@ -14,34 +14,34 @@ public class App {
 
     public static void main(String[] args) {
         if(args.length > 0) {
-            String result = "";
-            String format = "";
             
             CommandLineParser parser = new DefaultParser();
 
 
             Options options = new Options();
             options.addOption("h", "help", false, "Show help");
-            options.addOption("if", "input-file", true, "File to process");
+            options.addRequiredOption("if", "input-file", true, "File to process");
             options.addOption("of", "output-file", true, "File to put the Machine Code (or OPs) in.");
-            options.addOption("f", "format", true, "Set the output format (valid: \"hex\", \"bin\", \"oct\", \"ihex\")");
+            options.addOption("f", "format", true, "Set the output format (valid: \"hex\", \"bin\", \"oct\", \"ihex\", \"symbin\"). Default: bin");
             options.addOption("op", "operations", false, "Generate Operations instead of machine code.");
             options.addOption("noSImm", null, false, "Don't optimize for signed inline immediates (10 bit, -512 to 511). Makes assembling more predictable but increases code size drastically.");
             
             try {
                 CommandLine cli = parser.parse(options, args);
+                String inputFile = cli.getOptionValue("if");
+                String outputFile = cli.hasOption("of") ? cli.getOptionValue("of") : "a.out";
+                String format = cli.hasOption("f") ? cli.getOptionValue("f") : "bin";
 
+                boolean noSImm = cli.hasOption("noSImm") ? true : false;
+                
+                String content = Files.readString(Path.of(inputFile));
+                String result = "";
+                
                 if(cli.hasOption("h")) {
                     HelpFormatter hf = new HelpFormatter();
-                    hf.printHelp("termasm {if=INPUT_FILE,OPTION*}", options);
+                    hf.printHelp("termasm if=INPUT_FILE -of OUTPUT_FILE (OPTIONS...)", options);
                     return;
                 }
-                if(!cli.hasOption("if")) {
-                    System.out.println("Input file is required!");
-                    System.exit(1);
-                }
-                String content = Files.readString(Path.of(cli.getOptionValue("if")));
-                format = cli.hasOption("f") ? cli.getOptionValue("f") : "hex";
                 if(cli.hasOption("op")) {
                     String[] lines = content.split("\n");
                     lines[0] = "";
@@ -79,10 +79,9 @@ public class App {
                         };
                         result = result + "\n" + op;
                     }
-                    Files.writeString(Path.of(cli.getOptionValue("of")), (format.equals("ihex") ? "v2.0 raw\n" : "") + result);
+                    Files.writeString(Path.of(outputFile), (format.equals("ihex") ? "v2.0 raw\n" : "") + result);
                 } else {
-                    AbstractAssembler assembler = new AssemblerVisitor(!cli.hasOption("noSImm"));
-                    System.out.println("Format: '" + format + "'");
+                    AbstractAssembler assembler = new AssemblerVisitor(!noSImm);
                     String mc = switch(format) {
                         case "hex" -> convert(assembler.assemble(content), 2, 16);
                         case "ihex" -> convert(assembler.assemble(content), 2, 16);
@@ -106,7 +105,7 @@ public class App {
                     // }
 
 
-                    Files.writeString(Path.of(cli.getOptionValue("of")), (format.equals("ihex") ? "v2.0 raw\n" : "") + mc);
+                    Files.writeString(Path.of(outputFile), (format.equals("ihex") ? "v2.0 raw\n" : "") + mc);
                 }
             } catch (ParseException | IOException e) {
                 e.printStackTrace();
