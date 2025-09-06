@@ -153,6 +153,14 @@ public class AssemblerVisitor
                 }
                 pc++;
             }
+            if(child instanceof AssemblyParser.LiteralContext) {
+                var lt = (AssemblyParser.LiteralContext) child;
+                AssemblyLexer lexer = new AssemblyLexer(CharStreams.fromString("nop " + lt.getText()));
+                CommonTokenStream tokens = new CommonTokenStream(lexer);
+                AssemblyParser parser = new AssemblyParser(tokens);
+                statements.add(parser.statement());
+                pc++;
+            }
             // System.out.println("Instrution finished. PC: " + pc);
             mayorForLine.put(stmtIdx++, currentMayor);
         }

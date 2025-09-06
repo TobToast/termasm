@@ -33,7 +33,7 @@ import java.util.*;
 }
 
 assemblyprog
-    : (statement | labeldef)* EOF
+    : (statement | labeldef | literal)* EOF
     ;
 
 statement
